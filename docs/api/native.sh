@@ -1,0 +1,1 @@
+curl -X POST "https://api.ltzf.cn/api/wxpay/native" -H "content-type: application/x-www-form-urlencoded" -d "mch_id=1673424392&out_trade_no=xfg240413001&total_fee=0.01&body=QQ公仔&timestamp=1733816371&notify_url=https://gaga.plus&sign=0B876492433A88B8FB174BF5C48A7CDD"
