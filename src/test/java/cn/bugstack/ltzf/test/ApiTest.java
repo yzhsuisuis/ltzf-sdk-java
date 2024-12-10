@@ -7,6 +7,7 @@ package cn.bugstack.ltzf.test;
  */
 
 import cn.bugstack.ltzf.payments.nativepay.INativePayApi;
+import cn.bugstack.ltzf.payments.nativepay.model.PrepayResponse;
 import cn.bugstack.ltzf.utils.SignUtils;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +55,7 @@ public class ApiTest {
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build()
                 .create(INativePayApi.class);
-//        获取时间戳不需要使用,
+//        获取时间戳不需要使用,这里是没有new的
         long timestamp = System.currentTimeMillis() / 1000;
         HashMap<String, String> dataMap = new HashMap<>();
         dataMap.put("mch_id", "1700833091");
@@ -63,7 +64,9 @@ public class ApiTest {
         dataMap.put("body", "QQ公仔");
         dataMap.put("timestamp", String.valueOf(timestamp));
         dataMap.put("notify_url", "http://yangbo666.site");
-        Call<Object> call = nativePayApi.prepay(
+
+//        这里的对象可以说自定义的
+        Call<PrepayResponse> call = nativePayApi.prepay(
                 dataMap.get("mch_id"),
                 dataMap.get("out_trade_no"),
                 dataMap.get("total_fee"),
@@ -72,7 +75,7 @@ public class ApiTest {
                 dataMap.get("notify_url"),
                 SignUtils.createSign(dataMap, "2aadaaf746b36088b77dc9e7b995ea4d"));
 
-        Response<Object> response = call.execute();
+        Response<PrepayResponse> response = call.execute();
         Object object = response.body();
 
         log.info("测试结果:{}", JSON.toJSONString(object));
